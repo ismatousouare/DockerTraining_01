@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  python-server:
+    build: .
+    image: ismatou/webserver:0.0.1
+    container_name: python-server
+    ports:
+      - "8084:8081"
+    networks:
+      - webnet
+
+  site4:
+    build: .
+    image: ismatou/webserver:0.0.1
+    container_name: site4_container
+    ports:
+      - "8085:8081"
+    volumes:
+      - ./site4:/webapp
+    networks:
+      - webnet
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+volumes:
+  portainer_data:
+    driver: local
+
+networks:
+  webnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
+          gateway: 172.30.0.1

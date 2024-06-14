@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  proxy-apache2:
+    image: ubuntu/apache2:2.4-21.10_edge
+    container_name: proxy
+    volumes:
+      - ./proxyweb:/var/www/html
+    ports:
+      - "80:80"
+    networks:
+      deflaut:
+        ipv4_address: 172.23.0.2
+
+networks:
+  deflaut:
+    name: proxy-net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.23.0.0/16
+          gateway: 172.23.0.1
