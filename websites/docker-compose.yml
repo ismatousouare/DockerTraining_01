@@ -1,6 +1,10 @@
-version: '3.8'
-
 services:
+  site-1:
+    image:  ubuntu/apache2:2.4-21.10_edge
+    container_name: site1
+    ports:
+      - "8081:80"
+
   python-server:
     build: .
     image: ismatou/webserver:0.0.1
